@@ -338,13 +338,13 @@ class Material(MainWindow):
                     if not constrainedCheck:
                         constrainedCheck = True
                         note.append(prefix + ": constrained = true")
-                    display(paramSelector, paramItem)   # //////////////NOT FINISHED///////////////
+                    display(paramSelector, paramItem)                       # //////////////NOT FINISHED///////////////
                 # ---------- Temperature: Temperature ----------
                 elif(groupName == "Temperature" and paramName == "Temperature"):
-                    display(paramSelector, paramItem)   # //////////////NOT FINISHED///////////////
+                    display(paramSelector, paramItem)                       # //////////////NOT FINISHED///////////////
                 # ---------- Exchange Properties: Exchange Matrix ----------
                 elif(groupName == "Exchange Properties" and paramName == "Exchange Matrix"):
-                    display(paramSelector, paramItem)   # //////////////NOT FINISHED///////////////
+                    display(paramSelector, paramItem)                       # //////////////NOT FINISHED///////////////
                 # ---------- normal output ----------
                 elif type(paramSelector) is str: 
                     display(paramSelector, paramItem)
