@@ -31,16 +31,17 @@ class Ui_exp_unit_pop(object):
         self.outerframe.setFont(font)
         self.outerframe.setAutoFillBackground(False)
         self.outerframe.setStyleSheet(u"#confirm_button, #discard_button, #reset_button{\n"
+"	font: 14pt \"Calibri\";\n"
 "	color: rgb(221, 221, 221);\n"
-"	border: 2px solid  rgb(65, 74, 90);\n"
+"	border: none;\n"
 "	border-radius: 12px;	\n"
-"	background-color: rgb(65, 74, 90);\n"
+"	background-color: rgb(122, 115, 227);\n"
 "}\n"
 "#confirm_button:hover, #discard_button:hover, #reset_button:hover {\n"
-"	border: 2px solid rgb(91, 105, 129);\n"
+"	border: 2px solid rgb(193, 193, 255);\n"
 "}\n"
 "#confirm_button:pressed, #discard_button:pressed, #reset_button:pressed {	\n"
-"	background-color: rgb(35, 40, 49);\n"
+"	background-color: rgb(116, 174, 212);\n"
 "	border: 2px solid rgb(43, 50, 61);\n"
 "}\n"
 " #sig, #exp{\n"
@@ -48,25 +49,27 @@ class Ui_exp_unit_pop(object):
 "	background-color: rgb(40, 44, 52);\n"
 "	border: none\n"
 "}\n"
-"#outerframe{\n"
-"	background-color: rgb(40, 44, 52);\n"
-"	border: 5px solid rgb(78, 87, 103);\n"
-"	border-radius: 30px;\n"
-"}\n"
+"#sig {	font: 18pt \"Calibri\";   }\n"
+"#exp {	font: 16pt \"Calibri\";   }\n"
 " #sig:hover, #exp:hover {\n"
 "	color: rgb(245, 245, 245);\n"
 "}\n"
+"#outerframe{\n"
+"	background-color: rgb(40, 44, 52);\n"
+"	border: 5px solid rgb(122, 115, 227);\n"
+"	border-radius: 30px;\n"
+"}\n"
 "#combobox{\n"
+"	font: 14pt \"Calibri\";\n"
 "	color: rgb(221, 221, 221);\n"
 "	background-color: rgb(27, 29, 35);\n"
-"	border-radius: 5px;\n"
-"	border: 2px solid rgb(33, 37, 43);\n"
+"	border-radius: 5px;"
+                        "\n"
+"	border: 3px solid rgb(27, 29, 35);\n"
 "	padding: 5px;\n"
-"	padding-left: 10px;\n"
 "}\n"
 "#combobox:hover{\n"
-"	border"
-                        ": 2px solid rgb(64, 71, 88);\n"
+"	border: 3px solid rgb(64, 71, 88);\n"
 "}\n"
 "#combobox::down-arrow {\n"
 "	image: url(:/icons/images/icons/cil-arrow-bottom.png);\n"
@@ -78,16 +81,17 @@ class Ui_exp_unit_pop(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: top right;\n"
 "	width: 25px;\n"
-"	border-left: 3px solid rgba(39, 44, 54, 150);\n"
+"	border-left: 3px solid rgba(40, 44, 52, 150);\n"
 "	border-top-right-radius: 3px;\n"
 "	border-bottom-right-radius: 3px;\n"
 "}\n"
 "#combobox QAbstractItemView {\n"
 "	outline: none;\n"
-"	color: rgb(255, 121, 198);\n"
-"	background-color: rgb(33, 37, 43);\n"
+"	color: rgb(234, 194, 237);\n"
+"	background-color: rgb(27, 29, 35);\n"
 "	padding: 10px;\n"
-"	selection-background-color: rgb(39, 44, 54);\n"
+"	selection-color: rgb(234, 194, 237);\n"
+"	selection-background-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:0.8, y2:0.5, stop:0 rgba(122, 115, 227,160), stop:1 rgba(122, 115, 227, 20));\n"
 "}")
         self.outerframe.setFrameShape(QFrame.Box)
         self.outerframe.setFrameShadow(QFrame.Raised)
@@ -96,7 +100,9 @@ class Ui_exp_unit_pop(object):
         self.combobox.setGeometry(QRect(200, 15, 140, 35))
         font1 = QFont()
         font1.setFamilies([u"Calibri"])
-        font1.setPointSize(12)
+        font1.setPointSize(14)
+        font1.setBold(False)
+        font1.setItalic(False)
         self.combobox.setFont(font1)
         self.combobox.setFocusPolicy(Qt.WheelFocus)
         self.combobox.setAutoFillBackground(False)
@@ -112,8 +118,9 @@ class Ui_exp_unit_pop(object):
         self.sig.setSizePolicy(sizePolicy)
         font2 = QFont()
         font2.setFamilies([u"Calibri"])
-        font2.setPointSize(16)
+        font2.setPointSize(18)
         font2.setBold(False)
+        font2.setItalic(False)
         self.sig.setFont(font2)
         self.sig.setStyleSheet(u"")
         self.sig.setWrapping(False)
@@ -131,8 +138,9 @@ class Ui_exp_unit_pop(object):
         self.exp.setGeometry(QRect(150, 10, 41, 22))
         font3 = QFont()
         font3.setFamilies([u"Calibri"])
-        font3.setPointSize(14)
-        font3.setKerning(True)
+        font3.setPointSize(16)
+        font3.setBold(False)
+        font3.setItalic(False)
         self.exp.setFont(font3)
         self.exp.setWrapping(False)
         self.exp.setFrame(False)

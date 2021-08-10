@@ -1,6 +1,7 @@
 from modules import *
 from . dirpop import *
 from . unitpop import *
+from . rangepop import *
 from math import floor, log10
 
 class ParamSetDelegate(QStyledItemDelegate):
@@ -57,7 +58,8 @@ class ParamSetDelegate(QStyledItemDelegate):
             return dspin
         elif(self.dataType in ["3dspin","dir-1","dir-2"]):
             dirpop = DirPopWindow(parent,self.dataType)
-            dirpop.setFixedSize(450,130)
+            #dirpop.resetFont()
+            #dirpop.setFixedSize(450,130)
             return dirpop
         elif(self.dataType == "text"):
             self.placeholder = "(filename)"
@@ -106,38 +108,17 @@ class ParamSetDelegate(QStyledItemDelegate):
             editor.blockSignals(True)
             editor.setValue(float(modelData))
             editor.blockSignals(False)
-        elif(self.dataType == "3dspin"):
-            modelData = modelData[1:-1]
-            dir = modelData.split(',')
-            data = []
-            for _ in dir:
-                data.append(float(_))
-            data.append(0)
-            editor.blockSignals(True)
-            editor.setData(data)
-            editor.blockSignals(False)
-        elif(self.dataType in ["dir-1","dir-2"]):
-            combolist = ["random","random grain"]
-            if(modelData in combolist):
-                index = combolist.index(modelData)
-                editor.blockSignals(True)
-                editor.setData(index)
-                editor.blockSignals(False)
-            else:
-                modelData = modelData[1:-1]
-                dir = modelData.split(',')
-                data = []
-                for _ in dir:    data.append(float(_))
-                data.append(editor.maxComboID)
-                editor.blockSignals(True)
-                editor.setData(data)
-                editor.blockSignals(False)
         elif(self.dataType in ["text"]):
             text = ""  if(modelData == self.placeholder) else modelData
             editor.blockSignals(True)
             editor.setText(text)
             editor.blockSignals(False)
+        elif(self.dataType in ["3dspin","dir-1","dir-2"]):
+            editor.blockSignals(True)
+            editor.setData(modelData)
+            editor.blockSignals(False)
         elif(self.dataType in Settings.UNIT_LIST):
+            editor.blockSignals(True)
             editor.setData(modelData)
             editor.blockSignals(False)
         else: return
@@ -165,19 +146,33 @@ class ParamSetDelegate(QStyledItemDelegate):
             if not editor.cancel:
                 model.setData(index, editor.getData())
 
+def setPopupAttributes(self):
+    self.setWindowFlag(Qt.FramelessWindowHint)
+    self.setAttribute(Qt.WA_NoSystemBackground, True)
+    self.setAttribute(Qt.WA_TranslucentBackground, True)
+
+
 class DirPopWindow(QDialog):
-    def __init__(self,parent:QWidget,dataType:str ="3dspin"):
+    def __init__(self, parent:QWidget, dataType:str ="3dspin"):
         super().__init__(parent)
+        
         self.ui = Ui_direction_pop()
         self.ui.setupUi(self)
+        setPopupAttributes(self)
+        self.ui.confirm_button.clicked.connect(lambda: self.btnClick(False))
+        self.ui.discard_button.clicked.connect(lambda: self.btnClick(True))
+        self.ui.reset_button.clicked.connect(lambda : self.setData(""))
+        self.ui.combobox.currentIndexChanged.connect(lambda index: self.ui.frame.setEnabled((index == self.maxComboID)))
         self.defaultData = [ 0.0, 0.0, 1.0, 0]
-        self.setData(self.defaultData)
+        self.data = self.defaultData
+        self.maxComboID = self.ui.combobox.count()-1
         self.cancel = False
         self.dataType = dataType
-        self.__initUI()
+        self.__switchType()
+        self.setData("")
         self.show()
 
-    def __initUI(self):
+    def __switchType(self):
         if(self.dataType == "3dspin"):
             self.ui.combobox.hide()
         elif(self.dataType == "dir-1"):
@@ -188,80 +183,75 @@ class DirPopWindow(QDialog):
             self.ui.combobox.show()
             self.ui.frame.setEnabled(False)
         self.maxComboID = self.ui.combobox.count()-1
-        self.setWindowFlag(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_NoSystemBackground, True)
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.ui.confirm_button.clicked.connect(self.confirmClick)
-        self.ui.discard_button.clicked.connect(self.discardClick)
-        self.ui.reset_button.clicked.connect(lambda : self.setData(self.defaultData))
-        self.ui.combobox.currentIndexChanged.connect(self.comboChange)
-    def confirmClick(self):
-        self.cancel = False
-        self.close()    
-    def discardClick(self):
-        self.cancel = True
+
+    def btnClick(self, cancel = True):
+        self.cancel = cancel
         self.close()
-    def comboChange(self, index:int):
-        switch = (index == self.maxComboID)
-        self.ui.frame.setEnabled(switch)
-    def setData(self,data):
-        if type(data) is int:
-            self.data[3] = data
+
+    def setData(self,text):
+        if text == "":
+            self.data = self.defaultData
+            self.setAll()
+            return
+        combolist = ["random","random grain"]
+        try:
+            self.data[3] = combolist.index(text)
             self.ui.combobox.setCurrentIndex(self.data[3])
-        elif type(data) is list:
-            self.data = data
-            self.ui.dir_x.setValue(self.data[0])
-            self.ui.dir_y.setValue(self.data[1])
-            self.ui.dir_z.setValue(self.data[2])
-            self.ui.combobox.setCurrentIndex(self.data[3])
+        except ValueError:
+            text = text[1:-1]
+            dir = text.split(',')
+            self.data = [float(dir[0]), float(dir[1]),float(dir[2]), self.maxComboID]
+            self.setAll()
+
+    def setAll(self):
+        self.ui.dir_x.setValue(self.data[0])
+        self.ui.dir_y.setValue(self.data[1])
+        self.ui.dir_z.setValue(self.data[2])
+        self.ui.combobox.setCurrentIndex(self.data[3])
+
     def getData(self):
-        x = round(self.ui.dir_x.value(),3)
-        y = round(self.ui.dir_y.value(),3)
-        z = round(self.ui.dir_z.value(),3)
+        # ---------- check the combo box index for non-specific direction ----------
         comboID = self.ui.combobox.currentIndex()
-        if(self.dataType == "3dspin"):
-            return "["+str(x)+","+str(y)+","+str(z)+"]"
-        elif(self.dataType == "dir-1"):
+        if(self.dataType == "dir-1"):
             if(comboID == 0):    return "random"
-            return "["+str(x)+","+str(y)+","+str(z)+"]"
         elif(self.dataType == "dir-2"):
             if(comboID == 0):    return "random"
             elif(comboID == 1):  return "random grain"
-            return "["+str(x)+","+str(y)+","+str(z)+"]"
+        # ---------- output specific direction ----------
+        x = round(self.ui.dir_x.value(),3)
+        y = round(self.ui.dir_y.value(),3)
+        z = round(self.ui.dir_z.value(),3)
+        dirStr = "["+str(x)+","+str(y)+","+str(z)+"]"
+        return dirStr
 
 class UnitPopWindow(QDialog):
-    def __init__(self,parent:QWidget,unitType:str="energy",defaultData:str="0"):
+    def __init__(self,parent:QWidget,unitType:str="energy",initValue:str="0"):
         super().__init__(parent)
         self.ui = Ui_exp_unit_pop()
         self.ui.setupUi(self)
 
         self.unitType = unitType
         self.cancel = False
-        self.defaultData = defaultData
+        self.defaultData = initValue + "    " +Settings.UNIT_LIST[self.unitType][0]
         self.setData(self.defaultData)
-        self.__initUI()
+        self.ui.combobox.addItems(Settings.UNIT_LIST[self.unitType])
+        setPopupAttributes(self)
+        self.ui.confirm_button.clicked.connect(lambda: self.btnClick(False))
+        self.ui.discard_button.clicked.connect(lambda: self.btnClick(True))
+        self.ui.reset_button.clicked.connect(lambda : self.setData(self.defaultData))
 
     def __textToData(self, text:str):
         # handeling the unit part
-        withUnit = text.split(' ')
+        number, unit = text.split('    ')
         try:
-            unit = withUnit[1]
             comboID = Settings.UNIT_LIST[self.unitType].index(unit)
         except:
             comboID = 0
         # handeling the value part
-        value = float(withUnit[0])
+        value = float(number)
         exp = int(floor(log10(abs(value)))) if value != 0 else 0
         sig = value/10**exp
         return [sig, exp, comboID]
-    def __initUI(self):
-        self.ui.combobox.addItems(Settings.UNIT_LIST[self.unitType])
-        self.setWindowFlag(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_NoSystemBackground, True)
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.ui.confirm_button.clicked.connect(self.confirmClick)
-        self.ui.discard_button.clicked.connect(self.discardClick)
-        self.ui.reset_button.clicked.connect(lambda : self.setData(self.defaultData))
     def setData(self,text:str):
         data = self.__textToData(text)
         self.ui.sig.setValue(data[0])
@@ -277,9 +267,41 @@ class UnitPopWindow(QDialog):
         else:
             valuestr = "{:.3e}".format(value)
         return valuestr+"    "+Settings.UNIT_LIST[self.unitType][comboID]
-    def confirmClick(self):
-        self.cancel = False
+    def btnClick(self, cancel = True):
+        self.cancel = cancel
         self.close()
-    def discardClick(self):
-        self.cancel = True
-        self.close()
+
+class RangePopWindow(QDialog):
+    def __init__(self,parent:QWidget,dataType:str="angle",maxlimit:str="360"):
+        super().__init__(parent)
+        self.ui = Ui_range_pop()
+        self.ui.setupUi(self)
+
+        self.dataType = dataType
+        self.data = [0.0, [0.0, 0.0, 0.0]]
+        self.min = 0
+        self.max = int(maxlimit)
+    
+    def setData(self,text):
+        """data format: 180, 45~60, 10~20  +5"""
+        if '+' in text:
+            minmax, incre = text.split("  +")
+            minValue, maxValue = minmax.split("~")
+            self.data[1] = [float(minValue), float(maxValue), float(incre)]
+        elif '~' in text:
+            minValue, maxValue = text.split("~")
+            self.data[1] = [float(minValue), float(maxValue), 0.0]
+        else:
+            self.data[0] = float(text)
+        self.ui.set_value.setValue(self.data[0])
+        self.ui.min_value.setValue(self.data[1][0])
+        self.ui.max_value.setValue(self.data[1][1])
+        self.ui.incre_value.setValue(self.data[1][2])
+
+    def setDefaultData(self):
+        if self.dataType == "angle":
+            self.unit = "°"
+        else:
+            self.unit = "T"
+        self.ui.set_unit.setText(self.unit)
+        self.ui.set_value.setValue(0)

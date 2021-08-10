@@ -159,8 +159,8 @@ class Settings():
         },
         "Simulation Properties" : {
             "Constrained Angle" : {
-                "Theta"               : ["angle"],
-                "Phi"                 : ["angle"]
+                "Theta"               : ["angle","360"],
+                "Phi"                 : ["angle","180"]
             },
             "Applied Field" : {
                 "Strength"            : ["field","0"],

@@ -28,47 +28,48 @@ class Ui_direction_pop(object):
         self.outerframe = QFrame(direction_pop)
         self.outerframe.setObjectName(u"outerframe")
         self.outerframe.setMinimumSize(QSize(0, 0))
-        font = QFont()
-        font.setFamilies([u"Calibri"])
-        font.setPointSize(14)
-        self.outerframe.setFont(font)
         self.outerframe.setStyleSheet(u"#confirm_button, #discard_button, #reset_button{\n"
+"	font: 14pt \"Calibri\";\n"
 "	color: rgb(221, 221, 221);\n"
-"	border: 2px solid  rgb(65, 74, 90);\n"
+"	border: none;\n"
 "	border-radius: 12px;	\n"
-"	background-color: rgb(65, 74, 90);\n"
+"	background-color: rgb(122, 115, 227);\n"
 "}\n"
 "#confirm_button:hover, #discard_button:hover, #reset_button:hover {\n"
-"	border: 2px solid rgb(91, 105, 129);\n"
+"	border: 2px solid rgb(193, 193, 255);\n"
 "}\n"
 "#confirm_button:pressed, #discard_button:pressed, #reset_button:pressed {	\n"
-"	background-color: rgb(35, 40, 49);\n"
+"	background-color: rgb(116, 174, 212);\n"
 "	border: 2px solid rgb(43, 50, 61);\n"
 "}\n"
 " #lable, #dir_x, #dir_y, #dir_z{\n"
+"	font: 16pt \"Calibri\";\n"
 "	color: rgb(221, 221, 221);\n"
 "	background-color: rgb(40, 44, 52);\n"
 "	border: none\n"
 "}\n"
-"#dir_x:hover , #dir_y:hover , #dir_z:hover {\n"
+"#dir_x:hover:enabled , #dir_y:hover:enabled , #dir_z:hover:enabled {\n"
 "	color: rgb(245, 245, 245);\n"
+"}\n"
+"#dir_x:disabled , #dir_y:disabled , #dir_z:disabled {\n"
+"	color: rgb(101, 109, 125);\n"
 "}\n"
 "#outerframe{\n"
 "	background-color: rgb(40, 44, 52);\n"
-"	border: 5px solid rgb(78, 87, 103);\n"
+"	border: 5px solid rgb(122, 115, 227);\n"
 "	border-radius: 30px;\n"
 "}\n"
 "#combobox{\n"
+"	font: 14pt"
+                        " \"Calibri\";\n"
 "	color: rgb(221, 221, 221);\n"
 "	background-color: rgb(27, 29, 35);\n"
 "	border-radius: 5px;\n"
-"	border: 2px solid rgb(33, 37, 43);\n"
+"	border: 3px solid rgb(27, 29, 35);\n"
 "	padding: 5px;\n"
-"	padding-left: 10px;"
-                        "\n"
 "}\n"
 "#combobox:hover{\n"
-"	border: 2px solid rgb(64, 71, 88);\n"
+"	border: 3px solid rgb(64, 71, 88);\n"
 "}\n"
 "#combobox::down-arrow {\n"
 "	image: url(:/icons/images/icons/cil-arrow-bottom.png);\n"
@@ -80,16 +81,17 @@ class Ui_direction_pop(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: top right;\n"
 "	width: 25px;\n"
-"	border-left: 3px solid rgba(39, 44, 54, 150);\n"
+"	border-left: 3px solid rgba(40, 44, 52, 150);\n"
 "	border-top-right-radius: 3px;\n"
 "	border-bottom-right-radius: 3px;\n"
 "}\n"
 "#combobox QAbstractItemView {\n"
 "	outline: none;\n"
-"	color: rgb(255, 121, 198);\n"
-"	background-color: rgb(33, 37, 43);\n"
+"	color: rgb(234, 194, 237);\n"
+"	background-color: rgb(27, 29, 35);\n"
 "	padding: 10px;\n"
-"	selection-background-color: rgb(39, 44, 54);\n"
+"	selection-color: rgb(234, 194, 237);\n"
+"	selection-background-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:0.8, y2:0.5, stop:0 rgba(122, 115, 227,160), stop:1 rgba(122, 115, 227, 20));\n"
 "}")
         self.outerframe.setFrameShape(QFrame.Box)
         self.outerframe.setFrameShadow(QFrame.Raised)
@@ -107,10 +109,6 @@ class Ui_direction_pop(object):
         sizePolicy.setHeightForWidth(self.reset_button.sizePolicy().hasHeightForWidth())
         self.reset_button.setSizePolicy(sizePolicy)
         self.reset_button.setMinimumSize(QSize(85, 32))
-        font1 = QFont()
-        font1.setFamilies([u"Calibri"])
-        font1.setPointSize(12)
-        self.reset_button.setFont(font1)
         self.reset_button.setFocusPolicy(Qt.ClickFocus)
         self.reset_button.setAutoDefault(False)
 
@@ -121,7 +119,6 @@ class Ui_direction_pop(object):
         sizePolicy.setHeightForWidth(self.discard_button.sizePolicy().hasHeightForWidth())
         self.discard_button.setSizePolicy(sizePolicy)
         self.discard_button.setMinimumSize(QSize(85, 32))
-        self.discard_button.setFont(font1)
         self.discard_button.setFocusPolicy(Qt.ClickFocus)
         self.discard_button.setAutoDefault(False)
 
@@ -132,7 +129,6 @@ class Ui_direction_pop(object):
         sizePolicy.setHeightForWidth(self.confirm_button.sizePolicy().hasHeightForWidth())
         self.confirm_button.setSizePolicy(sizePolicy)
         self.confirm_button.setMinimumSize(QSize(85, 32))
-        self.confirm_button.setFont(font1)
         self.confirm_button.setFocusPolicy(Qt.ClickFocus)
         self.confirm_button.setAutoDefault(False)
 
@@ -140,7 +136,7 @@ class Ui_direction_pop(object):
 
         self.horizontalLayoutWidget_2 = QWidget(self.outerframe)
         self.horizontalLayoutWidget_2.setObjectName(u"horizontalLayoutWidget_2")
-        self.horizontalLayoutWidget_2.setGeometry(QRect(10, 10, 421, 56))
+        self.horizontalLayoutWidget_2.setGeometry(QRect(22, 10, 441, 56))
         self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -152,7 +148,6 @@ class Ui_direction_pop(object):
         sizePolicy.setHeightForWidth(self.combobox.sizePolicy().hasHeightForWidth())
         self.combobox.setSizePolicy(sizePolicy)
         self.combobox.setMinimumSize(QSize(160, 0))
-        self.combobox.setFont(font1)
 
         self.horizontalLayout_2.addWidget(self.combobox)
 
@@ -166,16 +161,14 @@ class Ui_direction_pop(object):
         sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
         self.frame.setSizePolicy(sizePolicy)
         self.frame.setMinimumSize(QSize(230, 52))
-        self.frame.setFont(font)
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.dir_z = QDoubleSpinBox(self.frame)
         self.dir_z.setObjectName(u"dir_z")
         self.dir_z.setEnabled(True)
-        self.dir_z.setGeometry(QRect(160, 10, 65, 30))
+        self.dir_z.setGeometry(QRect(150, 10, 65, 30))
         sizePolicy.setHeightForWidth(self.dir_z.sizePolicy().hasHeightForWidth())
         self.dir_z.setSizePolicy(sizePolicy)
-        self.dir_z.setFont(font)
         self.dir_z.setWrapping(False)
         self.dir_z.setFrame(False)
         self.dir_z.setAlignment(Qt.AlignCenter)
@@ -188,9 +181,14 @@ class Ui_direction_pop(object):
         self.dir_x = QDoubleSpinBox(self.frame)
         self.dir_x.setObjectName(u"dir_x")
         self.dir_x.setEnabled(True)
-        self.dir_x.setGeometry(QRect(20, 10, 65, 30))
+        self.dir_x.setGeometry(QRect(10, 10, 65, 30))
         sizePolicy.setHeightForWidth(self.dir_x.sizePolicy().hasHeightForWidth())
         self.dir_x.setSizePolicy(sizePolicy)
+        font = QFont()
+        font.setFamilies([u"Calibri"])
+        font.setPointSize(16)
+        font.setBold(False)
+        font.setItalic(False)
         self.dir_x.setFont(font)
         self.dir_x.setWrapping(False)
         self.dir_x.setFrame(False)
@@ -204,10 +202,9 @@ class Ui_direction_pop(object):
         self.dir_y = QDoubleSpinBox(self.frame)
         self.dir_y.setObjectName(u"dir_y")
         self.dir_y.setEnabled(True)
-        self.dir_y.setGeometry(QRect(90, 10, 65, 30))
+        self.dir_y.setGeometry(QRect(80, 10, 65, 30))
         sizePolicy.setHeightForWidth(self.dir_y.sizePolicy().hasHeightForWidth())
         self.dir_y.setSizePolicy(sizePolicy)
-        self.dir_y.setFont(font)
         self.dir_y.setWrapping(False)
         self.dir_y.setFrame(False)
         self.dir_y.setAlignment(Qt.AlignCenter)
@@ -219,10 +216,8 @@ class Ui_direction_pop(object):
         self.dir_y.setValue(0.000000000000000)
         self.lable = QLabel(self.frame)
         self.lable.setObjectName(u"lable")
-        self.lable.setGeometry(QRect(10, 5, 230, 41))
-        font2 = QFont()
-        font2.setPointSize(14)
-        self.lable.setFont(font2)
+        self.lable.setGeometry(QRect(2, 5, 230, 41))
+        self.lable.setStyleSheet(u"")
         self.lable.raise_()
         self.dir_z.raise_()
         self.dir_x.raise_()
@@ -255,6 +250,6 @@ class Ui_direction_pop(object):
         self.combobox.setItemText(1, QCoreApplication.translate("direction_pop", u"random grain", None))
         self.combobox.setItemText(2, QCoreApplication.translate("direction_pop", u"specific", None))
 
-        self.lable.setText(QCoreApplication.translate("direction_pop", u"[           ,           ,           ]", None))
+        self.lable.setText(QCoreApplication.translate("direction_pop", u"[             ,             ,             ]", None))
     # retranslateUi
 

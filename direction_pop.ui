@@ -46,50 +46,48 @@
        <height>0</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
      <property name="styleSheet">
       <string notr="true">#confirm_button, #discard_button, #reset_button{
+	font: 14pt &quot;Calibri&quot;;
 	color: rgb(221, 221, 221);
-	border: 2px solid  rgb(65, 74, 90);
-	border-radius: 12px;	
-	background-color:rgb(170, 85, 255);
 	border: none;
+	border-radius: 12px;	
+	background-color: rgb(122, 115, 227);
 }
 #confirm_button:hover, #discard_button:hover, #reset_button:hover {
-	border: 2px solid rgb(91, 105, 129);
+	border: 2px solid rgb(193, 193, 255);
 }
 #confirm_button:pressed, #discard_button:pressed, #reset_button:pressed {	
-	background-color: rgb(35, 40, 49);
+	background-color: rgb(116, 174, 212);
 	border: 2px solid rgb(43, 50, 61);
 }
  #lable, #dir_x, #dir_y, #dir_z{
+	font: 16pt &quot;Calibri&quot;;
 	color: rgb(221, 221, 221);
 	background-color: rgb(40, 44, 52);
 	border: none
 }
-#dir_x:hover , #dir_y:hover , #dir_z:hover {
+#dir_x:hover:enabled , #dir_y:hover:enabled , #dir_z:hover:enabled {
 	color: rgb(245, 245, 245);
+}
+#dir_x:disabled , #dir_y:disabled , #dir_z:disabled {
+	color: rgb(101, 109, 125);
 }
 #outerframe{
 	background-color: rgb(40, 44, 52);
-	border: 5px solid rgb(189, 147, 249);
+	border: 5px solid rgb(122, 115, 227);
 	border-radius: 30px;
 }
 #combobox{
+	font: 14pt &quot;Calibri&quot;;
 	color: rgb(221, 221, 221);
 	background-color: rgb(27, 29, 35);
 	border-radius: 5px;
-	border: 2px solid rgb(33, 37, 43);
+	border: 3px solid rgb(27, 29, 35);
 	padding: 5px;
-	padding-left: 10px;
 }
 #combobox:hover{
-	border: 2px solid rgb(64, 71, 88);
+	border: 3px solid rgb(64, 71, 88);
 }
 #combobox::down-arrow {
 	image: url(:/icons/images/icons/cil-arrow-bottom.png);
@@ -101,16 +99,17 @@
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	width: 25px;
-	border-left: 3px solid rgba(39, 44, 54, 150);
+	border-left: 3px solid rgba(40, 44, 52, 150);
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
 #combobox QAbstractItemView {
 	outline: none;
-	color: rgb(255, 147, 249);
-	background-color: rgb(33, 37, 43);
+	color: rgb(234, 194, 237);
+	background-color: rgb(27, 29, 35);
 	padding: 10px;
-	selection-background-color: rgb(39, 44, 54);
+	selection-color: rgb(234, 194, 237);
+	selection-background-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:0.8, y2:0.5, stop:0 rgba(122, 115, 227,160), stop:1 rgba(122, 115, 227, 20));
 }</string>
      </property>
      <property name="frameShape">
@@ -143,12 +142,6 @@
            <height>32</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <family>Calibri</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
          <property name="focusPolicy">
           <enum>Qt::ClickFocus</enum>
          </property>
@@ -173,12 +166,6 @@
            <width>85</width>
            <height>32</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Calibri</family>
-           <pointsize>12</pointsize>
-          </font>
          </property>
          <property name="focusPolicy">
           <enum>Qt::ClickFocus</enum>
@@ -205,12 +192,6 @@
            <height>32</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <family>Calibri</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
          <property name="focusPolicy">
           <enum>Qt::ClickFocus</enum>
          </property>
@@ -227,9 +208,9 @@
      <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>22</x>
         <y>10</y>
-        <width>453</width>
+        <width>441</width>
         <height>56</height>
        </rect>
       </property>
@@ -247,12 +228,6 @@
            <width>160</width>
            <height>0</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Calibri</family>
-           <pointsize>12</pointsize>
-          </font>
          </property>
          <property name="sizeAdjustPolicy">
           <enum>QComboBox::AdjustToMinimumContentsLength</enum>
@@ -304,12 +279,6 @@
            <height>52</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <family>Calibri</family>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -322,7 +291,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>160</x>
+            <x>150</x>
             <y>10</y>
             <width>65</width>
             <height>30</height>
@@ -333,12 +302,6 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>14</pointsize>
-           </font>
           </property>
           <property name="wrapping">
            <bool>false</bool>
@@ -374,7 +337,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>20</x>
+            <x>10</x>
             <y>10</y>
             <width>65</width>
             <height>30</height>
@@ -389,7 +352,10 @@
           <property name="font">
            <font>
             <family>Calibri</family>
-            <pointsize>14</pointsize>
+            <pointsize>16</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
           </property>
           <property name="wrapping">
@@ -426,7 +392,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>90</x>
+            <x>80</x>
             <y>10</y>
             <width>65</width>
             <height>30</height>
@@ -437,12 +403,6 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>14</pointsize>
-           </font>
           </property>
           <property name="wrapping">
            <bool>false</bool>
@@ -475,19 +435,17 @@
          <widget class="QLabel" name="lable">
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>2</x>
             <y>5</y>
             <width>230</width>
             <height>41</height>
            </rect>
           </property>
-          <property name="font">
-           <font>
-            <pointsize>14</pointsize>
-           </font>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
           <property name="text">
-           <string>[           ,           ,           ]</string>
+           <string>[             ,             ,             ]</string>
           </property>
          </widget>
          <zorder>lable</zorder>

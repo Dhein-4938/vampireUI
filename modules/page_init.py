@@ -9,17 +9,6 @@ DEFAULT_MATERIAL_NAME = "(name)"
 DEFAULT_JMOL_ELEMENT = "(element)"
 NO_SELECT_TITLE = "----------------------"
 
-class TreeObject:
-    def __init__(self,item):
-        self.item = item
-        self.childList = []
-    def appendChild(self, child):
-        self.childList.append(child)
-    def child(self,index):
-        if len(self.childList) == 0: return None
-        return self.childList[index]
-    def children(self):
-        return self.childList
 
 def setHeader(textlist:list[str], model:QStandardItemModel, alignment="center"):
     """set header item for the treeview model"""
