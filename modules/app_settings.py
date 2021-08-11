@@ -172,7 +172,7 @@ class Settings():
                 "Direction"           : ["3dspin","[0.0,0.0,1.0]"]
             },
             "Temperature" : {
-                "Temperature"                 : ["temp"],
+                "Temperature"                 : ["temp","1000000"],
                 "Use Phonon Temperature"      : ["none"],
                 "Rescaling Exponent"          : ["dspin","1"],
                 "Rescaling Curie Temperature" : ["spin","0"]
